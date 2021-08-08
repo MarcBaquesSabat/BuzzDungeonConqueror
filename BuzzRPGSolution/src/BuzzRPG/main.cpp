@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <stdio.h>
 
-
+//Trying develop
 bool init() {
     auto isInitialized = SDL_Init(SDL_INIT_VIDEO) >= 0;
 
