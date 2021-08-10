@@ -1,9 +1,10 @@
 #include "Game.h"
+#include <iostream>
 
 
 int main(int argc, char* args[]) {
 
-    BuzzRPG::Game game;
+    /*BuzzRPG::Game game;
 
     if (!game.Init()) {
         game.Quit();
@@ -12,7 +13,7 @@ int main(int argc, char* args[]) {
 
     game.Update();
 
-    game.Quit();
+    game.Quit();*/
 
     return 0;
 }
