@@ -1,19 +1,15 @@
 #include "Game.h"
-#include <iostream>
 
 
 int main(int argc, char* args[]) {
 
-    /*BuzzRPG::Game game;
+    BuzzRPG::Game game;
 
-    if (!game.Init()) {
-        game.Quit();
-        return -1;
-    }
+    game.Init();
 
-    game.Update();
+    game.Loop();
 
-    game.Quit();*/
+    game.Quit();
 
     return 0;
 }

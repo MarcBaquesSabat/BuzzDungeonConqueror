@@ -1,57 +1,65 @@
 #include "Game.h"
 
-bool BuzzRPG::Game::Init()
+void BuzzRPG::Game::Init()
 {
     auto isInitialized = SDL_Init(SDL_INIT_VIDEO) >= 0;
 
     if (!isInitialized) {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        return false;
+        throw SDL_Exception(SDL_GetError());
     }
 
-
-    window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        512, 512, SDL_WINDOW_SHOWN);
-
-    if (window == NULL) {
-        printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        SDL_Quit();
-        return false;
+    SDL_CreateWindowAndRenderer(512, 512, SDL_WINDOW_SHOWN, &window, &renderer);
+    if (window == nullptr || renderer == nullptr) {
+        throw SDL_Exception(SDL_GetError());
     }
 
-    screenSurface = SDL_GetWindowSurface(window);
+    isRunning = true;
 
-    if (screenSurface == nullptr) {
-        printf("Surface could not be created! SDL_Error: %s\n", SDL_GetError());
-        SDL_Quit();
-        return false;
-    }
-
-    SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-    SDL_UpdateWindowSurface(window);
-
-    return true;
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 }
 
-void BuzzRPG::Game::Update()
+void BuzzRPG::Game::Loop()
 {
-    bool mustQuit = false;
-    SDL_Event e;
-    while (!mustQuit) {
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
-                mustQuit = true;
-            }
+    try {
+        while (isRunning) {
+            HandleEvents();
+
+            Update();
+
+            Render();
+        }
+    }
+    catch (std::exception exception) {
+        fprintf(stderr, exception.what());
+        SDL_Quit();
+    }
+}
+
+void BuzzRPG::Game::HandleEvents()
+{
+    if (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            isRunning = false;
         }
     }
 }
 
+void BuzzRPG::Game::Update()
+{
+    
+}
+
+void BuzzRPG::Game::Render()
+{
+    SDL_RenderClear(renderer);
+
+    SDL_RenderPresent(renderer);
+}
+
+
 void BuzzRPG::Game::Quit()
 {
-
-    SDL_FreeSurface(screenSurface);
-    screenSurface = NULL;
-
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
     SDL_Quit();
