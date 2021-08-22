@@ -166,10 +166,12 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ErrorHandling\SDL_Exception.cpp" />
+    <ClCompile Include="Systems\Rendering\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="ErrorHandling\SDL_Exception.h" />
+    <ClInclude Include="Systems\Rendering\Renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
